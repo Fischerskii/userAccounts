@@ -1,48 +1,53 @@
 package ru.iteco.boot.useraccounts.controllers;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import ru.iteco.boot.useraccounts.model.BankBookDto;
+import ru.iteco.boot.useraccounts.model.dto.BankBookDto;
 import ru.iteco.boot.useraccounts.service.BankBookService;
+import ru.iteco.boot.useraccounts.validation.Created;
+import ru.iteco.boot.useraccounts.validation.Update;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("bank/bank-book")
+@Validated
 public class BankBookRestController {
 
     private final BankBookService bankBookService;
 
-    public BankBookRestController(BankBookService bankBookService) {
-        this.bankBookService = bankBookService;
-    }
-
-    @GetMapping
-    public ResponseEntity<List<BankBookDto>> getAll() {
-        return ResponseEntity.ok(bankBookService.findAll());
-    }
-
-    @GetMapping({"/by-user-id/{userID}", "/by-user-id/"})
-    public ResponseEntity<List<BankBookDto>> getByUserId(@PathVariable Integer userID) {
-        return ResponseEntity.ok(bankBookService.findByUserId(userID));
-    }
-
-    @GetMapping({"/by-id/{id}", "/"})
-    public ResponseEntity<BankBookDto> getById(@PathVariable Integer id) {
+    @GetMapping({"/id", "/"})
+    public ResponseEntity<BankBookDto> getBankBookById(@Min(2) @PathVariable Integer id) {
         return ResponseEntity.ok(bankBookService.findById(id));
     }
 
+    @GetMapping({"/by-user-id/{userID}", "/by-user-id/"})
+    public ResponseEntity<List<BankBookDto>> getBankBookByUserId(@CookieValue Integer userId, @RequestHeader Map<String, String> headers) {
+        log.info("Headers: {}", headers);
+        return ResponseEntity.ok(bankBookService.findByUserId(userId));
+    }
+
+    @Validated(Created.class)
     @PostMapping
-    public ResponseEntity<BankBookDto> createAccount(@RequestBody BankBookDto bankBookDto) {
+    public ResponseEntity<BankBookDto> createBankBook(@Valid @RequestBody BankBookDto bankBookDto) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(bankBookService.create(bankBookDto));
     }
 
+    @Validated(Update.class)
     @PutMapping
-    public BankBookDto updateBankBook(@RequestBody BankBookDto bankBookDto) {
+    public BankBookDto updateBankBook(@Valid @RequestBody BankBookDto bankBookDto) {
         return bankBookService.update(bankBookDto);
     }
 

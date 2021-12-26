@@ -5,10 +5,10 @@ import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.iteco.boot.useraccounts.model.BankBookNotFoundException;
-import ru.iteco.boot.useraccounts.model.BankBookNumberCannotBeModifiedException;
-import ru.iteco.boot.useraccounts.model.BankBookWithCurrencyAlreadyHaveException;
-import ru.iteco.boot.useraccounts.model.ErrorDto;
+import ru.iteco.boot.useraccounts.model.exception.BankBookNotFoundException;
+import ru.iteco.boot.useraccounts.model.exception.BankBookNumberCannotBeModifiedException;
+import ru.iteco.boot.useraccounts.model.exception.BankBookWithCurrencyAlreadyHaveException;
+import ru.iteco.boot.useraccounts.model.dto.ErrorDto;
 
 @RestControllerAdvice
 public class BankBookRestExceptionHandler {

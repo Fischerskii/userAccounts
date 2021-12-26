@@ -1,13 +1,11 @@
 package ru.iteco.boot.useraccounts.service;
 
 
-import ch.qos.logback.core.util.InvocationGate;
-import ru.iteco.boot.useraccounts.model.BankBookDto;
+import ru.iteco.boot.useraccounts.model.dto.BankBookDto;
 
 import java.util.List;
 
 public interface BankBookService {
-    List<BankBookDto> findAll();
     List<BankBookDto> findByUserId(Integer userId);
     BankBookDto findById(Integer id);
     BankBookDto create(BankBookDto bankBookDto);

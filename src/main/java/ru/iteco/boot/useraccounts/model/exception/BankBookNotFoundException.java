@@ -1,4 +1,4 @@
-package ru.iteco.boot.useraccounts.model;
+package ru.iteco.boot.useraccounts.model.exception;
 
 public class BankBookNotFoundException extends RuntimeException {
 

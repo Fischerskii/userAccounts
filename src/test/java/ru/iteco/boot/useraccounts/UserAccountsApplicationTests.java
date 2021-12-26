@@ -8,6 +8,6 @@ class UserAccountsApplicationTests {
 
     @Test
     void contextLoads() {
-    }
 
+    }
 }
